@@ -23,6 +23,7 @@ app.use(clerkMiddleware);
 app.use("/api/clerk", clerkWebhook);
 
 app.get("/", (req, res) => {
+	console.log("server has workeds");
 	res.send("✅ Server is working");
 });
 
