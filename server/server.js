@@ -8,8 +8,11 @@ import clerkWebhook from "../controllers/clerkwebhooks.js";
 
 const app = express();
 
-// Connect to MongoDB
-await connectDB();
+try {
+	await connectDB();
+} catch (err) {
+	console.error("❌ DB connection failed at startup:", err);
+}
 
 // Middlewares
 app.use(cors());
@@ -20,9 +23,15 @@ app.use(clerkMiddleware);
 app.use("/api/clerk", clerkWebhook);
 
 app.get("/", (req, res) => {
-	res.send("Server is working");
+	res.send("✅ Server is working");
 });
 
-// Export serverless handler
+app.get("/debug-env", (req, res) => {
+	res.json({
+		MONGODB_URL: !!process.env.MONGODB_URL,
+		CLERK_WEBHOOK_SECRET: !!process.env.CLERK_WEBHOOK_SECRET,
+	});
+});
+
 export default app;
 export const handler = serverless(app);
