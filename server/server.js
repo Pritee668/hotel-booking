@@ -2,9 +2,9 @@ import express from "express";
 import serverless from "serverless-http";
 import cors from "cors";
 import "dotenv/config";
-import connectDB from "../configs/db.js";
+import connectDB from "./configs/db.js";
 import { clerkMiddleware } from "@clerk/express";
-import clerkWebhook from "../controllers/clerkwebhooks.js";
+import clerkWebhook from "./controllers/clerkwebhooks.js";
 
 const app = express();
 
